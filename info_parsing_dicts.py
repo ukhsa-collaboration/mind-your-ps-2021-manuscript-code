@@ -8,8 +8,8 @@ file_names_style = {
     'style2': r'([^-]+)-([A-Z])\..*',
     # g1, genotype; g2, dataset; g3, region
     'style3': r'(?P<Genotype>B3|D4|D8)(?:_|-).*?'
-              r'(?P<Dataset>GBR_GB|GBR_ROU_GB|GB)(?:_|-).*?'
-              r'(?P<Region>N450_MFNCR|N450|MFNCR)(?:_|-).*?'
+              r'(?P<Dataset>GBR_GB|GBR_ROU_GB|ROU_GB|GB)(?:_|-)?.*?'
+              r'(?P<Region>N450_MFNCR|N450|MFNCR)(?:_|-)?.*?'
               r'(?P<Settings>[A-Z])?',
     # tree summary files name format
     'style4': r'(?P<Genotype>B3|D4|D8)-(?P<Dataset>GBR_GB|GBR_ROU_GB|GB)-'

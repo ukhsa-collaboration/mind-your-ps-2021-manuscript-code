@@ -713,7 +713,7 @@ def results_for_dataset(
     # Setup
     # -----
     # get genotype/dataset info from trees path and load rates
-    trees_path_info = re.search(trees_path_regex, trees_path).groupdict()
+    trees_path_info = re.search(trees_path_regex, str(trees_path)).groupdict()
     genotype = trees_path_info[REGEX_GENOTYPE]
     dataset = trees_path_info[REGEX_DATASET]
     settings = trees_path_info[REGEX_SETTINGS]
@@ -738,8 +738,9 @@ def results_for_dataset(
 
         # get region info from fasta path
         region = re.search(
-            fasta_paths_regex, fasta_file).group(REGEX_REGION).replace(
-            'N450', 'N-450').replace('MFNCR', 'MF-NCR')
+            fasta_paths_regex, str(fasta_file)).group(REGEX_REGION).replace(
+            'N450_MFNCR', 'N-450+MF-NCR').replace('N450', 'N-450').replace(
+            'MFNCR', 'MF-NCR')
 
         # Model
         # -----
@@ -760,7 +761,7 @@ def results_for_dataset(
               f'{trees_path}')
 
     region_cats = pd.CategoricalDtype(
-        categories=['N-450', 'MF-NCR'], ordered=True)
+        categories=['N-450', 'MF-NCR', 'N-450+MF-NCR'], ordered=True)
     pairs_data[REGION] = pairs_data[REGION].astype(region_cats)
 
     # Process trees
@@ -775,7 +776,7 @@ def results_for_dataset(
         f'{int(probability_interval * 100)}-trees_summary.csv')
     # load each tree
     for tree_idx, tree in enumerate(ddp.Tree.yield_from_files(
-            files=[trees_path], schema='nexus',
+            files=[str(trees_path)], schema='nexus',
             extract_comment_metadata=True, store_tree_weights=True,
             rooting='default-rooted')):
         tree_results = results_for_tree(tree, pairs_index, pairs_data)

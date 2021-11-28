@@ -160,7 +160,8 @@ def prepare_df_for_plotting(data, group_by=PRED_EVOL_T):
 
 def calculate_dataset_rates(
         files_to_process, file_name_style=file_names_style['style4'],
-        group_by=PRED_EVOL_T, region_order=('N-450', 'MF-NCR')):
+        group_by=PRED_EVOL_T,
+        region_order=('N-450', 'MF-NCR', 'N-450+MF-NCR')):
     """
     Process set of files containing tree summaries to produce a table
     containing the statistics for each data set.
@@ -260,7 +261,7 @@ def get_axes_numbers(figure):
 def plot_model_stats(
         model_stats_file, x_axis,
         rates_to_plot=(TRUE_NEG, TRUE_POS, FALSE_NEG, FALSE_POS),
-        region_order=('N-450', 'MF-NCR'), sns_style='ticks',
+        region_order=('N-450', 'MF-NCR', 'N-450+MF-NCR'), sns_style='ticks',
         sns_context='paper', img_formats=('.png', '.svg', '.pdf'),
         add_hline=5):
     """
@@ -283,14 +284,14 @@ def plot_model_stats(
         independent variable are found.
     rates_to_plot : tuple, default (TRUE_NEG, TRUE_POS, FALSE_NEG, FALSE_POS)
         A tuple containing the rates to produce plots for.
-    region_order : tuple, default ('N-450', 'MF-NCR')
+    region_order : tuple, default ('N-450', 'MF-NCR', 'N-450+MF-NCR')
         Order in which to plot the regions.
     sns_style : str, default 'ticks'
         Argument passed to seaborn set_style method, which adjusts plot
         settings. Any permitted bt sns.set_style.
     sns_context : str or dict, default 'paper'
         Argument passed to seaborn set_context method, which adjusts plot
-        settings. Any permitted bt sns.set_context.
+        settings. Any permitted by sns.set_context.
     img_formats : tuple, default ('.png', '.svg')
         Tuple containing figure formats to save matplotlib plot as. Any file
         type supported by matplotlib.
@@ -312,7 +313,10 @@ def plot_model_stats(
     # regions/genotypes to be plotted
     grid_args = dict(
         row=GENOTYPE, row_order=sorted(model_stats[GENOTYPE].unique()),
-        col=REGION, col_order=region_order,
+        col=REGION,
+        col_order=[col 
+                   for col in region_order
+                   if col in model_stats[REGION].unique()],
         hue=LEGEND_LABEL, hue_order=rates_to_plot,
         palette=SERIES_COLOURS,
         height=4, aspect=1.5)
