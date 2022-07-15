@@ -10,8 +10,8 @@ import dendropy as ddp
 import numpy as np
 import pandas as pd
 # my modules
-from info_parsing_dicts import file_names_style
-from poissonsampling import poisson_mode_and_alpha
+from .info_parsing_dicts import file_names_style
+from .poissonsampling import poisson_mode_and_alpha
 
 """
 Module to make probability-model predictions and validate predictions against 

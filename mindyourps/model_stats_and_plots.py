@@ -10,7 +10,7 @@ import pandas as pd
 import seaborn as sns
 # my modules
 from info_parsing_dicts import file_names_style
-from model_validation import (
+from .model_validation import (
     TREE_NUMBER, REGION, PAIR_DELTA, T_TO_PUTATIVE_CA, PRED_EVOL_T, TRUE_NEG,
     TRUE_POS, FALSE_NEG, FALSE_POS, GENOTYPE, REGEX_GENOTYPE, REGEX_DATASET,
     REGEX_SETTINGS)
