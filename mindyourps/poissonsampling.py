@@ -23,9 +23,9 @@ def probability_for_n_changes(n, time, mu):
     Returns
     -------
     float
-        Poisson probability.
+        Poisson probability mass function at n substitutions and time.
     """
-    return (math.exp(- mu * time) * (mu * time) ** n) / math.factorial(n)
+    return poisson.pmf(n, mu * time)
 
 
 def poisson_mode_and_alpha(expected, alpha):
@@ -58,3 +58,26 @@ def poisson_mode_and_alpha(expected, alpha):
     lower_limit, upper_limit = poisson.interval(alpha, expected, loc=0)
 
     return mode, lower_limit, upper_limit
+
+
+def probability_for_up_to_n_changes(n, time, mu):
+    """
+    Probability that `n` or fewer substitutions have been experienced in `time`
+    for region with substitution rate `mu` substitutions/time unit.
+
+    Parameters
+    ----------
+    n : int
+        Number of substitutions.
+    time : int
+        Time t elapsed during which changes can occur.
+    mu : float
+        Substitutions per time. Multiply substitution rate in
+        substitutions/(site*time) by number of sites in the relevant region.
+
+    Returns
+    -------
+    float
+        Poisson cumulative distribution function at n substitutions and time.
+    """
+    return poisson.cdf(n, mu * time)
