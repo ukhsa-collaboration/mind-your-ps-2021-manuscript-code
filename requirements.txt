@@ -5,3 +5,4 @@ numpy
 pandas
 scipy
 seaborn
+fonttools>=4.62.0 # not directly required, pinned by Snyk to avoid a vulnerability
